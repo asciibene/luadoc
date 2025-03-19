@@ -1,11 +1,11 @@
 -- docgen.lua 
 
 -- Define constants
-const VERSION = "0.5" 
-CSS = '<link rel="stylesheet" href="./s.css"/>' 
-NL = "\n" 
+const VERSION = "0.6" 
+CSS_TAG = '<link rel="stylesheet" href="./s.css"/>' 
+ESC_NL = "\n" 
 
--- Define functions 
+-- Define helper functions 
 local function is_empty(tbl) 
   if #tbl == 0 then return true 
   else return false end 
@@ -41,9 +41,9 @@ local function parse_lua(filename)
     return ast 
 end 
 
--- Generate HTML documentation 
+-- Generate HTML documentation using AST
 local function generate_html(ast, file) 
-  local html = "<html><head>".. CSS .."</head><body>" 
+  local html = "<html><head>".. CSS_TAG .."</head><body>" 
   html = html .. '<h1 id="fn">' .. file .. "</h1><hr>" 
   html = html .. "<h2>Functions:</h2>" 
   for _, node in ipairs(ast) do 
@@ -66,32 +66,30 @@ local function generate_html(ast, file)
    end 
    --TODO parse objects / tbls 
 
-   html = html .. "<small>Lua GenDoc v"..VERSION.."</small>" 
+  html = html .. "<small>Lua GenDoc v"..VERSION.."</small>" 
   html = html .. "</body></html>" 
   return html 
 end 
 
 -- Main function 
-local function autodoc(file) 
-local ast = parse_lua(file) 
-local output 
-
--- Generate documentation in specified format 
-    output = generate_html(ast, file) 
-    local outf = io.open(file .. ".html", "w") 
+local function luadoc(fn) 
+    local ast = parse_lua(fn) 
+    -- Generate documentation in specified format 
+    local output = generate_html(ast, fn) 
+    local outf = io.open(fn .. ".html", "w") 
     outf:write(output) 
     outf:close() 
-    print("HTML documentation generated: " .. file .. ".html") 
+    print("HTML documentation generated: " .. fn .. ".html") 
 end 
+
+
 
 -- Command-line interface 
 local args = {...} 
 if #args < 1 then 
-   print("Usage: lua docgen.lua <file>") 
+   print("Usage: lua docgen.lua <some lua file>") 
 else 
-   local file = args[1] 
    if args[2] then user_css_fn = args[2] end 
-   autodoc(file) 
-
+   luadoc(args[1])
 end 
     
