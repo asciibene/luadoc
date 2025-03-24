@@ -20,7 +20,7 @@ Here is an example:
 --> This lua comment is the function short description.
 function generic_function(x)
     -- [x]: description of argument named "x"
-		return x + x
+    return x + x
 end
 ```
 
