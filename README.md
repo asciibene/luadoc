@@ -23,3 +23,7 @@ function generic_function(x)
 		return x + x
 end
 ```
+
+So in simple words, to create a function description insert a comment **before** the function definition, and make sure to start the comment with `-->` followed by a single space.
+As for arguments description you simply need to have the name of it in-between square brackets followed by a colon.
+`-- [arg]: argument description!`
