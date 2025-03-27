@@ -79,7 +79,7 @@ local function luadoc(fn)
     local outf = io.open(fn .. ".html", "w") 
     outf:write(output) 
     outf:close() 
-    print("HTML documentation generated: " .. fn .. ".html") 
+    print("Generated HTML from lua source: " .. fn .. ".html") 
 end 
 
 
@@ -87,7 +87,7 @@ end
 -- Command-line interface 
 local args = {...} 
 if #args < 1 then 
-   print("Usage: lua docgen.lua <some lua file>") 
+   print("Usage: lua docgen.lua <some lua file> <optional .css file containing your custom styles>") 
 else 
    if args[2] then user_css_fn = args[2] end 
    luadoc(args[1])
